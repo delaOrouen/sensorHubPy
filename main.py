@@ -22,11 +22,16 @@ def main():
     sensor_hub_data = []  # empty array of arrays
     sensor_hub_data[0] = ['H'] * CONST_FIRST_DATA_LENGTH  # empty array
     sensor_hub_data[1] = ['-1'] * 4
+    print("sanity check:")
+    print('Expecting sensor_hub_data[0] to be: [HHHHHHHHHHHH]')
+    print("sensor_hub_data[0] = :", str(sensor_hub_data[0]))
 
+    print("\n beginning while loop in 1 second")
+    time.sleep(1)
     while True:
         sensor_hub_data[0] = spi.read(CONST_FIRST_DATA_LENGTH)
-        print(str(sensor_hub_data[0]))
-        time.sleep(1)  # wait one second
+        print("sensor_hub_data = :", str(sensor_hub_data[0]))
+        time.sleep(.1)  # wait one second
 
 
 main()
