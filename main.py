@@ -18,7 +18,7 @@ CONST_FIRST_DATA_LENGTH = 12
 def main():
     spi = spidev.SpiDev()
     spi.open(0, 0)
-    spi.max_speed_hz = 15600000
+    spi.max_speed_hz = 976000
 #     spi.cshigh = False # default false
     spi.lsbfirst = False # default false
     spi.mode = 0
@@ -40,15 +40,18 @@ def main():
 #         print(listToString(spi.readbytes(CONST_FIRST_DATA_LENGTH)))
 #         spi.writebytes(['*'])
 #         spi.writebytes()
-        spi.writebytes(sendingMessage)
-#         recievedMessage = spi.readbytes(12)
-#         print("recieved message: ", recievedMessage)
+#         spi.writebytes(sendingMessage)
+#         time.sleep(.001)
+#         print("running")
+        recievedMessage = spi.readbytes(12)
+        print("recieved message: ", listToString(recievedMessage))
 #         for message in recievedMessage:
-#             if (message == 40 or message == 20):
+#               if (message == 40 or message == 20):
 #                 print("Recieved Character: ", chr(message)),
 #                 time.sleep(.3)  
         #print("sensor_hub_data = :", str(sensor_hub_data[0]))
 #         time.sleep(.2)  # wait one second
+    
 
 
 def listToString(myList):
