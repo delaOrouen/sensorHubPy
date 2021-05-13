@@ -60,7 +60,7 @@ def listToString(myList):
 def createSendingMessage(sendingMessage):
     messageList = []
     for character in sendingMessage:
-       messageList.append(bytes(character, 'ascii', errors = 'replace'))
+       messageList.append(bytes(character, 'ascii', 'replace'))
     return messageList
 
 main()
