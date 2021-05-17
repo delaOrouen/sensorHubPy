@@ -63,7 +63,7 @@ def listToString(myList):
 def createSendingMessage(sendingMessage):
     messageList = []
     for character in sendingMessage:
-       messageList.append(ord(character)) 
+       messageList.append(bytes(character, 'ascii', 'replace'))
     return messageList
 
 main()
