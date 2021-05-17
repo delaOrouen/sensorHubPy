@@ -1,54 +1,38 @@
-#!/usr/bin/python
-'''
-Developer: Rouen de la O
-Purpose: This is a program designed to operate a raspberry pi as a SPI master.
-This master will read from a SPI slave which is connected to a variety of
-sensors. This program will use a defined encoding to read a series of data from
-the SPI device.
-'''
+# sensorhub
+import sensorhub
 
-import sys
-import smbus2 as smbus  # smbus2
-import time
+# other stuff
+import logging
+from flask import Flask, send_file, request, Response
+from prometheus_client import start_http_server, Gauge, generate_latest
 
-I2C_SLAVE_ADDRESS = 26 # 0x1a
-MESSAGE = "Hello World!"
+# initialize the sensorhub
+I2C_ADDR = 26 # 0x1a
+sensorhub = sensorhub.SensorHub(I2C_ADDR)
 
+# set up the web server
+logger = logging.getLogger(__name__)
 
+app = Flask(__name__)
 
-def main():
-    I2Cbus = smbus.SMBus(1)
-    slaveSelect = 1
-    slaveAddress = I2C_SLAVE_ADDRESS
-    bytesToSend = createSendingMessage(MESSAGE)
-    sending = False
+CONTENT_TYPE_LATEST = str('text/plain; version=0.0.4; charset=utf-8')
+
+# create metrics to track sensor data
+SENSORHUB_NOISELEVEL = Gauge(
+    'sensorhub_noiselevel_db',
+    'Noise level observed by the Sensor Hub'
+)
+
+# configure the metrics endpoint
+@app.route('/metrics', methods=['GET'])
+def get_data():
+    """Returns all data as plaintext."""
+    try:
+        SENSORHUB_NOISELEVEL.set(sensorhub.recvBytes())
+    except Exception as e:
+        logger.error("Failed to update noise level. Exception: {}".format(e))
     
-    while True:
-        if (sending):
-            I2Cbus.write_i2c_block_data(slaveAddress, 0x00, bytesToSend)
-            print("sent data:", MESSAGE)
-        else:
-            try:
-                data = I2Cbus.read_i2c_block_data(slaveAddress, 0x00, 16)
-                print("data received: ")
-                print(data)
-            except:
-                print("remote i/o error")
-                time.sleep(0.5)
-    
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
-
-def listToString(myList):
-    newString = ""
-    for character in myList:
-        newString += chr(character)
-    return newString
-
-def createSendingMessage(sendingMessage):
-    byteList = []
-    for character in sendingMessage:
-       byteList.append(ord(character))
-    return byteList
-
-main()
-                  
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')

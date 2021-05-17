@@ -3,7 +3,6 @@ FROM balenalib/%%BALENA_MACHINE_NAME%%-python:latest
 
 # install package dependencies
 RUN apt-get update
-RUN apt-get install python-dev python-pip gcc
 RUN pip install --upgrade pip
 
 # Set our working directory
