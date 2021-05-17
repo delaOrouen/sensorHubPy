@@ -34,5 +34,6 @@ def get_data():
     
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
+# run the web server
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
