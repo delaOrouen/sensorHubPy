@@ -14,9 +14,9 @@ from gpiozero import LED
 import SensorHub
 
 # other stuff
-import logging
-from flask import Flask, send_file, request, Response
-from prometheus_client import start_http_server, Gauge, generate_latest
+# import logging
+# from flask import Flask, send_file, request, Response
+# from prometheus_client import start_http_server, Gauge, generate_latest
 
 # I2C_SLAVE_ADDRESS = 0x1a # 0x1a, 26
 MESSAGE = "Hello World!"
@@ -25,8 +25,9 @@ MESSAGE = "Hello World!"
 def test():
     sensorhubInfinite = SensorHub.SensorHub()
     dataRecieved = ""
+    print("starting")
     while True:
-        dataRecieved =  sensorhubInfinite.readBytes()
+        dataRecieved =  sensorhubInfinite.readBytes(50)
         print(dataRecieved)
         time.sleep(.010)
 
