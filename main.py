@@ -27,9 +27,9 @@ def test():
     dataRecieved = ""
     print("starting")
     while True:
-        dataRecieved =  sensorhubInfinite.readBytes(50)
+        dataRecieved =  sensorhubInfinite.readBytes(12)
         print(dataRecieved)
-        time.sleep(.010)
+#         time.sleep(.010)
 
 
 test()

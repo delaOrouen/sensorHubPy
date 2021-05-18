@@ -25,13 +25,13 @@ class SensorHub:
     def readBytes(self, num_bytes):
         self.interrupt.on()
         # consider adding a small delay?
-        self.rdata = self.ser.read(num_bytes)
+        self.rdata = str(self.ser.read(num_bytes))
 #         print(self.rdata)
         self.interrupt.off()
-        if (self.rdata != "b\'\'"):
-            return self.rdata[2:-1]
+        if (self.rdata == "b\'\'"):
+            return "-1" 
         else:
-            return "-1"
+            return self.rdata[2:-1]
 
     # this function may be unused
     # def listToString(self, myList):
