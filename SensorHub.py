@@ -5,8 +5,7 @@ Summary of the class
 '''
 # TODO: verify functionality
 
-import sys
-import smbus2 as smbus  # smbus2
+
 import time
 from gpiozero import LED
 import serial
