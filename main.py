@@ -10,7 +10,7 @@ from prometheus_client import start_http_server, Gauge, generate_latest
 I2C_ADDR = 26 # 0x1a
 sensorhub = sensorhub.SensorHub(I2C_ADDR)
 
-# set up the web server
+# PROMETHEUS FLASK SERVER
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -37,3 +37,16 @@ def get_data():
 # run the web server
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+
+# BASIC FLASK SERVER
+# app = Flask(__name__)
+
+# @app.route('/')
+# def getSensorDataJson():
+#     sensorData = {
+#         "Noise Level": "%0.1f dB" % sensorhub.recvBytes()
+#     }
+#     return json.dumps(sensorData)
+
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=9100)
