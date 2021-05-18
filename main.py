@@ -19,7 +19,7 @@ MESSAGE = "Hello World!"
 
 def main():
     ser = serial.Serial("/dev/ttyS0", baudrate = 9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
-    interrupt = LED(16)
+    interrupt = LED(23)
     while True:
         interrupt.on()
         # consider adding a small delay?
@@ -46,12 +46,12 @@ main()
 
 
 # sensorhub
-import sensorhub
-
-# other stuff
-import logging
-from flask import Flask, send_file, request, Response
-from prometheus_client import start_http_server, Gauge, generate_latest
+# import sensorhub
+# 
+# # other stuff
+# import logging
+# from flask import Flask, send_file, request, Response
+# from prometheus_client import start_http_server, Gauge, generate_latest
 
 # # initialize the sensorhub
 # I2C_ADDR = 26 # 0x1a
