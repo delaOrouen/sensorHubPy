@@ -10,6 +10,7 @@ pin configuration is enabled/disabled at /boot/config.txt
 #import smbus2 as smbus  # smbus2
 import time
 import serial
+from gpiozero import LED
 
 # I2C_SLAVE_ADDRESS = 0x1a # 0x1a, 26
 MESSAGE = "Hello World!"
@@ -18,9 +19,13 @@ MESSAGE = "Hello World!"
 
 def main():
     ser = serial.Serial("/dev/ttyS0", baudrate = 9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
+    interrupt = LED(16)
     while True:
-        rdata = ser.read(12)
+        interrupt.on()
+        # consider adding a small delay?
+        rdata = ser.read(50)
         print(rdata)
+        interrupt.off()
         time.sleep(.010)
         
 
