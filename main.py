@@ -44,40 +44,14 @@ def createSendingMessage(sendingMessage):
 
 main()
 
-# i2c main
-# def main():
-#     I2Cbus = smbus.SMBus(1)
-#     time.sleep(1)
-#     slaveSelect = 1
-#     slaveAddress = I2C_SLAVE_ADDRESS
-#     bytesToSend = createSendingMessage(MESSAGE)
-#     sending = False
-#     convertedData = ""
-#     
-#     while True:
-#         if (sending):
-#             I2Cbus.write_i2c_block_data(slaveAddress, 0x00, bytesToSend)
-#             print("sent data:", MESSAGE)
-#         else:
-#             try:
-#                 data = I2Cbus.read_i2c_block_data(slaveAddress, 0x00, 12)
-#                 if (data[0] != 211):
-#                     print("data received: ", data)
-#                     convertedData = listToString(data)
-#                     print("               ", convertedData)
-#                     time.sleep(0.1)
-#             except:
-#                 print("remote i/o error")
-#                 time.sleep(0.1)
 
+# sensorhub
+import sensorhub
 
-# # sensorhub
-# import sensorhub
-
-# # other stuff
-# import logging
-# from flask import Flask, send_file, request, Response
-# from prometheus_client import start_http_server, Gauge, generate_latest
+# other stuff
+import logging
+from flask import Flask, send_file, request, Response
+from prometheus_client import start_http_server, Gauge, generate_latest
 
 # # initialize the sensorhub
 # I2C_ADDR = 26 # 0x1a
