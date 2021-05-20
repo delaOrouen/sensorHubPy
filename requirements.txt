@@ -1,4 +1,3 @@
-smbus2
 Flask
 prometheus-client
 pyserial
