@@ -15,8 +15,8 @@ class SensorHub:
     def __init__(self):
         self.ser = serial.Serial("/dev/ttyS0", baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE,
                                  bytesize=serial.EIGHTBITS, timeout=1)
-        self.interrupt = LED(23)
-        self.rdata = ""
+        self.interrupt = gpiozero.LED(23)
+        self.rdata = 0.0
 
     # sending bytes over uart us non-functional -- results in hardfault
     # def sendBytes(self, bytesToSend):
@@ -25,14 +25,11 @@ class SensorHub:
     def readBytes(self, num_bytes):
         self.interrupt.on()
         # consider adding a small delay?
-        try:
-            self.rdata = str(self.ser.read(num_bytes))
-        except:
-                
+        self.rdata = str(self.ser.read(num_bytes))
 #         print(self.rdata)
         self.interrupt.off()
         if (self.rdata == "b\'\'"):
-            return "-1" 
+            return "-1.0"
         else:
             return self.rdata[2:-1]
 
