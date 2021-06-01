@@ -1,3 +1,5 @@
 Flask
 prometheus-client
 pyserial
+gpiozero
+RPi.GPIO

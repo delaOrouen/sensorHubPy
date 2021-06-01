@@ -39,7 +39,7 @@ SENSORHUB_NOISELEVEL = Gauge(
 def get_data():
     """Returns all data as plaintext."""
     try:
-        SENSORHUB_NOISELEVEL.labels(device_name=device_name).set(sensorhub.readBytes())
+        SENSORHUB_NOISELEVEL.labels(device_name=device_name).set(sensorhub.readBytes(50))
     except Exception as e:
         logger.error("Failed to update noise level. Exception: {}".format(e))
 
