@@ -5,6 +5,8 @@ Developers: Rouen de la O, Christrian Lancaster
 
 File summary
 '''
+# Standard Library Imports
+import os
 # sensorhub
 import SensorHub
 
@@ -25,9 +27,11 @@ app = Flask(__name__)
 CONTENT_TYPE_LATEST = str('text/plain; version=0.0.4; charset=utf-8')
 
 # create metrics to track sensor data
+device_name = os.environ.get('BALENA_DEVICE_NAME_AT_INIT')
 SENSORHUB_NOISELEVEL = Gauge(
     'sensorhub_noiselevel_db',
-    'Noise level observed by the Sensor Hub'
+    'Noise level observed by the Sensor Hub',
+    ['device_name']
 )
 
 # configure the metrics endpoint
@@ -35,7 +39,7 @@ SENSORHUB_NOISELEVEL = Gauge(
 def get_data():
     """Returns all data as plaintext."""
     try:
-        SENSORHUB_NOISELEVEL.set(sensorhub.readBytes())
+        SENSORHUB_NOISELEVEL.labels(device_name=device_name).set(sensorhub.readBytes())
     except Exception as e:
         logger.error("Failed to update noise level. Exception: {}".format(e))
 
